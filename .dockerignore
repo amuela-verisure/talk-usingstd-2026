@@ -1,0 +1,9 @@
+build/
+.git/
+*.o
+*.a
+*.elf
+*.bin
+*.hex
+*.map
+compile_commands.json

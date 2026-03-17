@@ -1,0 +1,57 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "host-debug",
+            "displayName": "Host Debug (x86-64)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/host-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_STANDARD": "20",
+                "CMAKE_CXX_FLAGS_DEBUG": "-g3 -fno-omit-frame-pointer",
+                "BUILD_TESTING": "ON",
+                "WARNINGS_AS_ERRORS": "ON"
+            }
+        },
+        {
+            "name": "host-release",
+            "displayName": "Host Release (x86-64)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/host-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_STANDARD": "20",
+                "CMAKE_CXX_FLAGS_RELEASE": "-Os -flto -DNDEBUG",
+                "BUILD_TESTING": "ON",
+                "WARNINGS_AS_ERRORS": "ON"
+            }
+        },
+        {
+            "name": "arm-cortexm4",
+            "displayName": "ARM Cortex-M4 (cross-compile)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/arm",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchain-arm-none-eabi.cmake",
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_STANDARD": "20",
+                "CMAKE_CXX_FLAGS_RELEASE": "-Os -flto -DNDEBUG",
+                "BUILD_TESTING": "OFF",
+                "WARNINGS_AS_ERRORS": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        { "name": "host-debug",   "configurePreset": "host-debug" },
+        { "name": "host-release", "configurePreset": "host-release" },
+        { "name": "arm-cortexm4", "configurePreset": "arm-cortexm4" }
+    ],
+    "testPresets": [
+        {
+            "name": "host-debug",
+            "configurePreset": "host-debug",
+            "output": { "outputOnFailure": true }
+        }
+    ]
+}
